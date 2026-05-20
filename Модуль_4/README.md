@@ -13,6 +13,8 @@
 Для выгрузки из GitHub
 4 - git pull https://github.com/udovenkodv777-creator/puthon_v1.git
 
+4'- git pull https://github.com/udovenkodv777-creator/Python-Course.git
+
 ---
 
 27/04/26
