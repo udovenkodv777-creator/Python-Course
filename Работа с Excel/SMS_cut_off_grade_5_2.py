@@ -694,7 +694,7 @@ def create_cut_off_fem(filename="Cut_Off_Grade_MAR_FEM.xlsx"):
         end_type="max", end_color="70AD47"
     ))
 
-    # --- Накладываем красную рамку базового блока поверх всех 6 матриц ---
+    # --- Накладываем красную рамку и выделение базового блока поверх всех 6 матриц ---
     for m_start_r, m_start_c, m_rng in (
         (5, right_col, range_m4_1),
         (row_m2, right_col, range_m4_2),
@@ -707,11 +707,17 @@ def create_cut_off_fem(filename="Cut_Off_Grade_MAR_FEM.xlsx"):
         c_p_let = get_column_letter(m_start_c + 1)
         r_hdr = m_start_r + 1
         r_dat = m_start_r + 2
-        hl_f = f"AND(${c_fe_let}{r_dat}={fe_base_ref},{c_p_let}${r_hdr}={p_base_ref})"
+        hl_f = f"AND(ROUND(${c_fe_let}{r_dat},4)=ROUND({fe_base_ref},4),ROUND({c_p_let}${r_hdr},4)=ROUND({p_base_ref},4))"
         ws_mat.conditional_formatting.add(
             m_rng,
-            FormulaRule(formula=(hl_f,), stopIfTrue=False, border=border_highlight)
+            FormulaRule(
+                formula=(hl_f,),
+                stopIfTrue=False,
+                border=border_highlight,
+                font=Font(name=font_family, size=10, bold=True, underline="single", color="9C0006")
+            )
         )
+
 
     ws_mat.column_dimensions["A"].width = 3
     ws_mat.column_dimensions[get_column_letter(left_col)].width = 13
